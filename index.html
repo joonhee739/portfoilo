@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>이준희 | 미래자동차공학과 학업 포트폴리오</title>
+  <meta name="description" content="하드웨어 설계하는 것을 넘어서 소프트웨어까지 배우는 공학도">
+  <!-- 글꼴: Pretendard (인터넷 연결이 없으면 맑은 고딕 등 기본 글꼴로 보인다) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    /* ===== 디자인 기준 ===== */
+    :root {
+      --bg: #ECEBE7;      /* 배경색 */
+      --text: #222222;    /* 글자색 */
+      --main: #2B8C5F;    /* 주색(초록): 큰 글씨·라벨·프로젝트 표지에만 */
+      --sub: #66635D;     /* 보조 회색: 설명용 */
+      --card: #FFFFFF;    /* 카드 안쪽 */
+      --line: #D6D4CE;
+      --ph: #D9D8D3;      /* 사진 자리 회색 상자 */
+      --header-h: 64px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    ul, ol { list-style: none; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 위쪽 메뉴 ===== */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--header-h);
+      background: rgba(236, 235, 231, 0.92);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header .wrap {
+      height: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { font-weight: 800; text-decoration: none; white-space: nowrap; }
+    .brand span { font-weight: 500; color: var(--sub); }
+    .nav ul { display: flex; gap: 4px; }
+    .nav a {
+      display: block; padding: 5px 14px;
+      border: 2px solid transparent; border-radius: 999px;
+      text-decoration: none; font-size: 0.95rem; font-weight: 600;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav a:hover { color: var(--main); }
+    .nav a.active { border-color: var(--text); }
+    .menu-btn {
+      display: none;
+      width: 44px; height: 44px;
+      background: none; border: 2px solid var(--text); border-radius: 999px;
+      cursor: pointer; position: relative;
+    }
+    .menu-btn span {
+      position: absolute; left: 12px; right: 12px; height: 2px;
+      background: var(--text); transition: transform 0.25s, opacity 0.25s;
+    }
+    .menu-btn span:nth-child(1) { top: 14px; }
+    .menu-btn span:nth-child(2) { top: 20px; }
+    .menu-btn span:nth-child(3) { top: 26px; }
+    .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ===== 공통: 타원 테두리 라벨 ===== */
+    .pill {
+      display: inline-block;
+      padding: 6px 22px;
+      border: 2px solid var(--text); border-radius: 999px;
+      font-size: 1.15rem; font-weight: 800; line-height: 1.4;
+    }
+    .pill-light { border-color: #FFFFFF; color: #FFFFFF; }
+
+    /* ===== 섹션 공통 ===== */
+    section { scroll-margin-top: var(--header-h); }
+    .section { padding: 120px 0; border-top: 1px solid var(--line); }
+    .section-head { margin-bottom: 56px; }
+
+    /* ===== 소개 ===== */
+    .intro {
+      min-height: 100vh;
+      display: flex; align-items: flex-end;
+      padding: calc(var(--header-h) + 80px) 0 96px;
+    }
+    .intro-grid {
+      width: 100%;
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 64px; align-items: end;
+    }
+    .eyebrow { color: var(--sub); font-weight: 600; margin: 28px 0 14px; }
+    .intro h1 {
+      font-size: clamp(2rem, 4.4vw, 3.3rem);
+      font-weight: 800; line-height: 1.3; letter-spacing: -0.02em;
+      max-width: 15em;
+    }
+    .intro-desc { margin-top: 28px; font-size: 1.1rem; max-width: 40em; }
+    .keywords { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .keywords li {
+      padding: 6px 18px;
+      border: 1.5px solid var(--text); border-radius: 999px;
+      font-weight: 600; font-size: 0.95rem;
+    }
+    .intro-photo img, .intro-photo .ph {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px;
+    }
+
+    /* ===== 번호 목차 (전공·학업, 역량) ===== */
+    .num-list {
+      counter-reset: item;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 40px;
+    }
+    .num-list li { counter-increment: item; }
+    .num-list li::before {
+      content: counter(item);
+      display: block;
+      font-size: 1.5rem; font-weight: 800; line-height: 1;
+      padding-bottom: 12px; margin-bottom: 16px;
+      background: linear-gradient(var(--text), var(--text)) left bottom / 24px 2px no-repeat;
+    }
+    .num-list strong { display: block; font-size: 1.1rem; font-weight: 800; line-height: 1.45; }
+    .num-list p { margin-top: 8px; color: var(--sub); font-size: 0.95rem; }
+    .num-list.cards li {
+      background: var(--card); border-radius: 16px; padding: 28px 26px;
+    }
+
+    /* ===== 대표 프로젝트: 표지 ===== */
+    .project {
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px;
+      background: var(--main); color: #FFFFFF;
+      border-radius: 24px; padding: 40px;
+      min-height: 440px;
+    }
+    .project + .project { margin-top: 32px; }
+    .project-text {
+      display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
+    }
+    .project-text .pill { align-self: flex-start; }
+    .project h3 {
+      font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.01em;
+    }
+    .project-sub { margin-top: 14px; font-size: 1.2rem; font-weight: 600; line-height: 1.5; }
+    .project-media img, .project-media .ph {
+      width: 100%; height: 100%; min-height: 300px;
+      object-fit: cover; border-radius: 14px;
+    }
+    /* 그래프·도면이 잘리지 않도록 사진 전체를 흰 바탕 위에 보여 준다 (사진 비율과 상관없이 카드 높이는 같게) */
+    .project-media { position: relative; min-height: 300px; }
+    .project-media img {
+      position: absolute; inset: 0;
+      object-fit: contain; background: #FFFFFF; padding: 12px;
+    }
+
+    /* ===== 카드 안 2줄 설명 + 자세히 보기 버튼 ===== */
+    .project-more {
+      margin-top: 24px;
+      background: #FFFFFF; color: var(--text);
+      border-radius: 14px; padding: 18px 20px;
+    }
+    .project-desc { font-size: 0.95rem; line-height: 1.65; }
+    .btn-more {
+      margin-top: 14px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 18px;
+      border: 2px solid var(--text); border-radius: 999px;
+      background: transparent; color: var(--text);
+      font: inherit; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .btn-more:hover { background: var(--text); color: #FFFFFF; }
+    .btn-more:focus-visible, .modal-close:focus-visible { outline: 3px solid var(--main); outline-offset: 2px; }
+
+    /* ===== 전공·학업 세부 구성 (자격증 / 교육이수 / 전공 이수과목, 대표 3개 + 더보기) ===== */
+    .study-group + .study-group { margin-top: 80px; }
+    .study-group { scroll-margin-top: calc(var(--header-h) + 16px); }
+    .group-head {
+      display: flex; align-items: baseline; gap: 10px;
+      padding-bottom: 14px; margin-bottom: 36px;
+      border-bottom: 1px solid var(--line);
+    }
+    .group-title { font-size: 1.35rem; font-weight: 800; line-height: 1.4; }
+    .group-count { color: var(--sub); font-size: 0.95rem; font-weight: 700; }
+    .item-meta { display: block; margin-top: 6px; color: var(--sub); font-size: 0.85rem; font-weight: 600; }
+    .num-list .item-meta + p { margin-top: 6px; }
+    .study-group:not(.is-open) .more-item { display: none; }   /* 더보기 전에는 숨김 */
+    .study-group .btn-toggle { margin-top: 32px; }
+    .doc-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 4px 14px;
+      border: 1.5px solid var(--text); border-radius: 999px;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .doc-link:hover { background: var(--text); color: #FFFFFF; }
+    .doc-link:focus-visible { outline: 3px solid var(--main); outline-offset: 2px; }
+
+    /* ===== 자세히 보기 팝업 ===== */
+    body.modal-open { overflow: hidden; }
+    .modal {
+      width: min(760px, calc(100% - 32px)); max-width: none;
+      max-height: calc(100vh - 32px);
+      max-height: calc(100dvh - 32px);
+      margin: auto; padding: 0; border: none; border-radius: 24px;
+      background: var(--bg); color: var(--text);
+      overflow: hidden;
+    }
+    .modal[open] { display: flex; flex-direction: column; animation: modal-in 0.25s ease-out; }
+    .modal::backdrop { background: rgba(34, 34, 34, 0.55); }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
+    }
+    .modal-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      width: 44px; height: 44px;
+      border: 2px solid var(--text); border-radius: 999px;
+      background: #FFFFFF; color: var(--text);
+      font-size: 1.5rem; line-height: 1; cursor: pointer;
+    }
+    .modal-head { background: var(--main); color: #FFFFFF; padding: 36px 40px 32px; }
+    .modal-head h2 {
+      margin-top: 28px;
+      font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; line-height: 1.2;
+    }
+    .modal-head p { margin-top: 10px; font-size: 1.2rem; font-weight: 600; line-height: 1.5; }
+    /* 팝업 소제목 아래 자료 링크 (files 폴더의 PDF를 새 탭으로 연다) */
+    .modal-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .file-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 16px; border-radius: 999px;
+      background: #FFFFFF; color: var(--text);
+      font-size: 0.9rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .file-link:hover { background: var(--text); color: #FFFFFF; }
+    .file-link:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+    .detail-list { counter-reset: d; display: grid; gap: 28px; padding: 32px 40px 40px; }
+    .detail-list li {
+      counter-increment: d;
+      display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 8px 24px;
+    }
+    .detail-list h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.5; }
+    .detail-list h3::before {
+      content: counter(d, decimal-leading-zero);
+      display: block;
+      font-size: 0.85rem; font-weight: 700; color: var(--sub);
+      padding-bottom: 8px; margin-bottom: 8px;
+      background: linear-gradient(var(--text), var(--text)) left bottom / 20px 2px no-repeat;
+    }
+    .detail-list p { line-height: 1.8; }
+    .check {
+      display: inline-block; margin-left: 6px; padding: 0 10px;
+      border: 1.5px dashed var(--sub); border-radius: 999px;
+      color: var(--sub); font-size: 0.8rem; font-weight: 700;
+      vertical-align: middle; white-space: nowrap;
+    }
+
+    /* ===== 자주 묻는 질문 (누르면 펼치고 다시 누르면 접기) ===== */
+    .faq-list { display: grid; gap: 14px; }
+    .faq-item { background: var(--card); border-radius: 16px; }
+    .faq-item summary {
+      list-style: none; cursor: pointer;
+      display: grid; grid-template-columns: 56px minmax(0, 1fr) 32px; gap: 16px; align-items: center;
+      padding: 22px 26px; border-radius: 16px;
+      font-size: 1.1rem; font-weight: 800; line-height: 1.5;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::marker { content: ""; }
+    .faq-item summary:focus-visible { outline: 3px solid var(--main); outline-offset: 2px; }
+    .faq-num {
+      justify-self: start;
+      padding: 1px 12px;
+      border: 2px solid var(--text); border-radius: 999px;
+      font-size: 0.9rem; font-weight: 800;
+    }
+    .faq-icon {
+      position: relative; width: 32px; height: 32px;
+      border: 2px solid var(--text); border-radius: 999px;
+      transition: background 0.2s;
+    }
+    .faq-icon::before, .faq-icon::after {
+      content: ""; position: absolute; left: 50%; top: 50%;
+      width: 12px; height: 2px; background: var(--text);
+      transform: translate(-50%, -50%);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .faq-item[open] .faq-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+    .faq-item summary:hover .faq-icon { background: var(--text); }
+    .faq-item summary:hover .faq-icon::before,
+    .faq-item summary:hover .faq-icon::after { background: #FFFFFF; }
+    .faq-a { padding: 0 74px 24px 98px; }
+    .faq-a p { padding-top: 18px; border-top: 1px solid var(--line); line-height: 1.8; }
+    .faq-item[open] .faq-a { animation: faq-in 0.2s ease-out; }
+    @keyframes faq-in {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* ===== 사진 없을 때 회색 상자 ===== */
+    .ph {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--ph); border: 2px dashed #B9B7B0;
+      color: var(--sub); font-size: 0.85rem; font-family: Consolas, monospace;
+      padding: 16px; text-align: center;
+    }
+    .ph-block { width: 100%; min-height: 240px; border-radius: 16px; }
+
+    /* ===== 연락처 ===== */
+    .contact-mail {
+      display: inline-block;
+      font-size: clamp(1.4rem, 4vw, 2.6rem); font-weight: 800;
+      text-decoration: underline; text-decoration-color: var(--main);
+      text-decoration-thickness: 3px; text-underline-offset: 8px;
+      word-break: break-all;
+    }
+    .contact-mail:hover { color: var(--main); }
+
+    .footer { padding: 40px 0; border-top: 1px solid var(--line); color: var(--sub); font-size: 0.9rem; }
+
+    /* ===== 태블릿 ===== */
+    @media (max-width: 860px) {
+      .menu-btn { display: block; }
+      .nav {
+        position: absolute; top: var(--header-h); left: 0; right: 0;
+        background: var(--bg); border-bottom: 1px solid var(--line);
+        display: none;
+      }
+      .nav.open { display: block; }
+      .nav ul { flex-direction: column; gap: 4px; padding: 12px 20px 20px; }
+      .nav a { padding: 10px 16px; font-size: 1rem; }
+      .intro { min-height: auto; padding: calc(var(--header-h) + 56px) 0 72px; }
+      .intro-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+      .intro-photo { max-width: 280px; }
+      .section { padding: 88px 0; }
+      .section-head { margin-bottom: 40px; }
+      .num-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 28px; }
+      .project { grid-template-columns: minmax(0, 1fr); padding: 28px; gap: 28px; min-height: auto; }
+      .project-text { gap: 32px; }
+      .project-media img, .project-media .ph { min-height: 0; aspect-ratio: 16 / 10; height: auto; }
+      .project-media { min-height: 0; aspect-ratio: 16 / 10; }
+      .project-media img { height: 100%; aspect-ratio: auto; }
+    }
+
+    /* ===== 휴대폰 ===== */
+    @media (max-width: 560px) {
+      .wrap { padding: 0 20px; }
+      .brand span { display: none; }
+      .intro-desc { font-size: 1rem; }
+      .num-list { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+      .num-list.cards { gap: 14px; }
+      .study-group + .study-group { margin-top: 56px; }
+      .group-head { margin-bottom: 28px; }
+      .group-title { font-size: 1.2rem; }
+      .project { padding: 24px 22px; border-radius: 20px; }
+      .modal { width: calc(100% - 20px); max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); border-radius: 20px; }
+      .modal-head { padding: 28px 22px 24px; }
+      .detail-list { padding: 24px 22px 32px; gap: 24px; }
+      .detail-list li { grid-template-columns: minmax(0, 1fr); }
+      .faq-item summary { grid-template-columns: 48px minmax(0, 1fr) 30px; gap: 12px; padding: 18px; font-size: 1.02rem; }
+      .faq-icon { width: 30px; height: 30px; }
+      .faq-a { padding: 0 18px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .modal[open] { animation: none; }
+      .faq-item[open] .faq-a { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 위쪽 메뉴 ===== -->
+  <header class="header">
+    <div class="wrap">
+      <a class="brand" href="#intro">이준희 <span>| 미래자동차공학과 학업 포트폴리오</span></a>
+      <button class="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="nav">
+        <ul>
+          <li><a href="#intro">소개</a></li>
+          <li><a href="#study">전공·학업</a></li>
+          <li><a href="#projects">대표 프로젝트</a></li>
+          <li><a href="#skills">역량</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">연락처</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== 1. 소개 ===== -->
+    <section id="intro" class="intro">
+      <div class="wrap intro-grid">
+        <div class="intro-text">
+          <span class="pill">소개</span>
+          <p class="eyebrow">이준희 | 미래자동차공학과 학업 포트폴리오</p>
+          <h1>하드웨어 설계하는 것을 넘어서 소프트웨어까지 배우는 공학도</h1>
+          <p class="intro-desc">차량을 설계하고 해석하는 일에서 출발해, 자율주행 차량을 움직이는 소프트웨어까지 공부하고 있다. 2026 IFAC RoboRacer 대회에 참가해 좁은 트랙에서 쓸 장애물 감지 방법을 다뤘다.</p>
+          <ul class="keywords">
+            <li>차량 설계 해석</li>
+            <li>자율주행 소프트웨어</li>
+            <li>로봇 시스템</li>
+          </ul>
+        </div>
+        <figure class="intro-photo">
+          <img src="images/profille.png" data-next="images/profile.jpg" data-ph="images/profille.png" alt="이준희 프로필 사진">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== 2. 전공·학업 ===== -->
+    <!-- 세 묶음(자격증 / 교육이수 / 전공 이수과목)으로 나눴다. 각 묶음은 대표 3개만 먼저 보이고,
+         class="more-item"인 항목은 '더보기'를 누르면 펼쳐진다. 번호는 CSS가 자동으로 매긴다. -->
+    <section id="study" class="section">
+      <div class="wrap">
+        <div class="section-head"><h2 class="pill">전공·학업</h2></div>
+
+        <!-- 2-1. 자격증 (3개라 더보기 없음. 4개 이상이 되면 넷째부터 class="more-item"을 붙이고 버튼을 추가한다) -->
+        <div class="study-group">
+          <div class="group-head"><h3 class="group-title">자격증</h3><span class="group-count">3개</span></div>
+          <ol class="num-list">
+            <li>
+              <strong>1종 보통 운전면허</strong>
+              <p>1종 보통 운전면허를 취득했다.</p>
+            </li>
+            <li>
+              <strong>산업안전산업기사</strong>
+              <p>산업안전산업기사 자격을 취득했다.</p>
+            </li>
+            <li>
+              <strong>어학성적: TOEIC Speaking IH</strong>
+              <span class="item-meta">2026.06.06 응시</span>
+              <p>TOEIC Speaking에서 Intermediate High 등급을 받았다.</p>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 2-2. 교육이수 (대표 3개 + 더보기 4개) -->
+        <div class="study-group">
+          <div class="group-head"><h3 class="group-title">교육이수</h3><span class="group-count">7개</span></div>
+          <ol class="num-list" id="edu-list">
+            <li>
+              <strong>서울대 자율주행 캠프</strong>
+              <span class="item-meta">2026.06.29~07.03</span>
+              <p>서울대 자율주행 캠프에 5일 동안 참여했다.</p>
+            </li>
+            <li>
+              <strong>미래차 산업 교육</strong>
+              <span class="item-meta">2026.07.21~08.08</span>
+              <p>경상국립대학교 글로컬대학사업단이 운영한 2026 자동차부품·전장·미래차 기초 과정(2분반)을 수료했다.</p>
+              <a class="doc-link" href="files/car_education_certificate.pdf" target="_blank" rel="noopener">수료증 PDF <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>취업역량강화캠프</strong>
+              <span class="item-meta">2026.06.23~24</span>
+              <p>2일 과정에 참여했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>취업역량강화캠프</strong>
+              <span class="item-meta">2024.12.23~24</span>
+              <p>2일 과정에 참여했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>취업역량강화캠프</strong>
+              <span class="item-meta">2025.06.23~24</span>
+              <p>2일 과정에 참여했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>취업역량강화캠프</strong>
+              <span class="item-meta">2025.12.23~24</span>
+              <p>2일 과정에 참여했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>취업역량강화캠프</strong>
+              <span class="item-meta">2026.12.23~24 (예정)</span>
+              <p>2일 과정에 참여할 예정이다.</p>
+            </li>
+          </ol>
+          <button class="btn-more btn-toggle" type="button" aria-expanded="false" aria-controls="edu-list">더보기 <span>+4</span></button>
+        </div>
+
+        <!-- 2-3. 전공 이수과목 (대표 3개 + 더보기 17개)
+             학기·구분·학점은 성적증명서 기준. 설명 문장은 사이트 설계서에 있던 사용자 문장만 넣었다(5개 과목).
+             나머지 과목은 사용자 선택에 따라 이수 정보만 표시했다. 설명을 받으면 <p>를 추가한다. -->
+        <div class="study-group">
+          <div class="group-head"><h3 class="group-title">전공 이수과목</h3><span class="group-count">20개</span></div>
+          <ol class="num-list" id="course-list">
+            <li>
+              <strong>미래차요소설계</strong>
+              <span class="item-meta">2026-1학기 · 일반선택 3학점</span>
+              <p>MATLAB/Simulink로 EV9 1D 종방향 모델을 만들고 WLTP 주행 전비를 해석했다</p>
+            </li>
+            <li>
+              <strong>자동차인공지능</strong>
+              <span class="item-meta">2025-2학기 · 전공선택 3학점</span>
+              <p>자율주행의 전반적인 이론과 c언어에 대해 배우고 그것을 토대로 roboracer대회에 출전을 했다.</p>
+            </li>
+            <li>
+              <strong>CATIA 설계1</strong>
+              <span class="item-meta">2025-2학기 · 전공선택 3학점</span>
+              <p>catia프로그램을 통해 부품등을 설계를 했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>공학응용수학</strong>
+              <span class="item-meta">2024-2학기 · 일반선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>자동차구조</strong>
+              <span class="item-meta">2024-2학기 · 일반선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>기계제도</strong>
+              <span class="item-meta">2024-2학기 · 전공필수 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>전공탐색과 진로설계</strong>
+              <!-- 성적증명서에서 찾지 못한 과목. 학기·학점을 받으면 고친다 -->
+              <span class="item-meta">학기·학점 <span class="check">확인 필요</span></span>
+            </li>
+            <li class="more-item">
+              <strong>공학입문설계</strong>
+              <span class="item-meta">2021-1학기 · 균형교양 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>고체역학</strong>
+              <span class="item-meta">2025-1학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>전산응용설계</strong>
+              <span class="item-meta">2025-1학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>컴퓨터 프로그래밍</strong>
+              <span class="item-meta">2025-1학기 · 전공선택 3학점</span>
+              <p>프로그래밍에 대한 전반적인 이론과 python과 vscode를 활용해서 c언어를 실습했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>자동차공학</strong>
+              <span class="item-meta">2025-1학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>응용유체역학</strong>
+              <span class="item-meta">2025-1학기 · 전공필수 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>응용열역학</strong>
+              <span class="item-meta">2025-2학기 · 일반선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>미래형 자동차공학</strong>
+              <span class="item-meta">2025-2학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>자동차첨단안전검사</strong>
+              <span class="item-meta">2026-1학기 · 일반선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>자동차부품3D설계</strong>
+              <span class="item-meta">2026-1학기 · 일반선택 3학점</span>
+              <p>cad 프로그램을 통해 도면 작성을 했다.</p>
+            </li>
+            <li class="more-item">
+              <strong>전기전자공학</strong>
+              <span class="item-meta">2026-1학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>센서계측공학</strong>
+              <span class="item-meta">2026-1학기 · 전공선택 3학점</span>
+            </li>
+            <li class="more-item">
+              <strong>차량부품요소설계</strong>
+              <span class="item-meta">2026-1학기 · 전공필수 3학점</span>
+            </li>
+          </ol>
+          <button class="btn-more btn-toggle" type="button" aria-expanded="false" aria-controls="course-list">더보기 <span>+17</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. 대표 프로젝트 ===== -->
+    <!-- 사진은 images 폴더에 아래 이름으로 넣으면 회색 상자 대신 자동으로 보인다 -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <div class="section-head"><h2 class="pill">대표 프로젝트</h2></div>
+
+        <article class="project">
+          <div class="project-text">
+            <span class="pill pill-light">Project. 1</span>
+            <div>
+              <h3>RoboRacer 2026</h3>
+              <p class="project-sub">좁은 트랙에서 추정 위치 없이 장애물 감지하기</p>
+              <div class="project-more">
+                <p class="project-desc">1/10 자율주행 레이싱 차량에서 위치추정에 기대지 않는 장애물 감지를 다뤘다.<br>대회 트랙 연습 주행 최고 랩은 14.7초였고, 예선은 기동 절차 문제로 나가지 못했다.</p>
+                <button class="btn-more" type="button" data-open="detail-roboracer" aria-haspopup="dialog">자세히 보기 <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="project-media">
+            <img src="images/roboracer.jpg" data-ph="images/roboracer.jpg" alt="RoboRacer 2026">
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-text">
+            <span class="pill pill-light">Project. 2</span>
+            <div>
+              <h3>EV9 파워트레인 해석</h3>
+              <p class="project-sub">툴 한계를 토크 맵 스케일링으로 풀기</p>
+              <div class="project-more">
+                <p class="project-desc">MATLAB/Simulink로 EV9 1D 종방향 모델을 만들어 WLTP 주행을 해석한 개인 과제다.<br>툴의 모터 토크 한계(225 Nm)를 토크 맵 스케일링으로 풀고 중량·공력 변화를 비교했다.</p>
+                <button class="btn-more" type="button" data-open="detail-ev9" aria-haspopup="dialog">자세히 보기 <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="project-media">
+            <img src="images/ev9.jpg" data-ph="images/ev9.jpg" alt="EV9 파워트레인 해석">
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-text">
+            <span class="pill pill-light">Project. 3</span>
+            <div>
+              <h3>Team KORE</h3>
+              <p class="project-sub">로봇팔 탑재 구조 차량의 전원·제어 배선 설계</p>
+              <div class="project-more">
+                <p class="project-desc">재난 현장에서 원격 조종으로 쓰는 로봇팔 탑재 소형 차량을 4인 팀으로 설계했다.<br>36V 구동부와 5V 제어부로 나눈 전원·제어 배선 설계를 맡았다.</p>
+                <button class="btn-more" type="button" data-open="detail-kore" aria-haspopup="dialog">자세히 보기 <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="project-media">
+            <img src="images/team_kore.jpg" data-ph="images/team_kore.jpg" alt="Team KORE">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== 4. 역량 ===== -->
+    <section id="skills" class="section">
+      <div class="wrap">
+        <div class="section-head"><h2 class="pill">역량</h2></div>
+        <ol class="num-list cards">
+          <li>
+            <strong>MATLAB/Simulink (VVC, Powertrain Blockset)</strong>
+            <p>EV9 파워트레인 해석</p>
+          </li>
+          <li>
+            <strong>Arduino 기반 전원·제어 배선 설계</strong>
+            <p>Team KORE</p>
+          </li>
+          <li>
+            <strong>ROS 2</strong>
+            <p>RoboRacer 2026</p>
+          </li>
+          <li>
+            <strong>2D LiDAR 데이터 처리</strong>
+            <p>RoboRacer 원호 회랑 감지 위치추정·경로 추종 (AMCL, Pure Pursuit) — RoboRacer</p>
+          </li>
+          <li>
+            <strong>rosbag 주행 기록 분석</strong>
+            <p>RoboRacer</p>
+          </li>
+          <li>
+            <strong>CATIA</strong>
+            <p>CATIA설계1 수강 및 각종 경진대회에서 활용</p>
+          </li>
+          <li>
+            <strong>ANSYS 구조 해석·3D 프린팅</strong>
+            <p>RISE 산학과제</p>
+          </li>
+          <li>
+            <strong>Python, 음성 명령·LLM 연동</strong>
+            <p>캡스톤 모바일 로봇</p>
+          </li>
+          <li>
+            <strong>Recurdyn 해석 프로그램</strong>
+            <p>서스펜션 해석</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 5. 자주 묻는 질문 ===== -->
+    <!-- 질문을 누르면 답변이 펼쳐지고, 다시 누르면 접힌다. 처음에는 모두 접힌 상태다. -->
+    <section id="faq" class="section">
+      <div class="wrap">
+        <div class="section-head"><h2 class="pill">자주 묻는 질문</h2></div>
+        <div class="faq-list">
+
+          <details class="faq-item">
+            <summary><span class="faq-num">Q1</span><span class="faq-q">미래자동차공학을 전공으로 고른 이유는?</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-a"><p>평소 자동차에 대한 관심이 많았고 전공에서는 기계제도·고체역학·전산응용설계 같은 기계 설계 기초와 자동차인공지능·센서계측공학·전기전자공학 같은 전장·소프트웨어 과목을 함께 들었다. 미래차요소설계에서는 EV9 파워트레인을 해석했고, 자동차인공지능에서 배운 자율주행 이론은 RoboRacer 대회 출전으로 이어졌다.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary><span class="faq-num">Q2</span><span class="faq-q">기계 설계와 소프트웨어를 함께 공부하는 이유는?</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-a"><p>EV9 파워트레인 해석 보고서에, 자율주행 알고리즘이 판단을 맡아도 차체를 원하는 속도와 타이밍에 구동·제동하는 설계가 받쳐 주지 않으면 안전을 담보하기 어렵다고 적었다. 그래서 구동계 해석과 자율주행 소프트웨어를 따로 떼어 보지 않으려 한다. EV9 과제에서는 구동계 모델을, RoboRacer에서는 장애물 감지와 조향 제어를 다뤘다.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary><span class="faq-num">Q3</span><span class="faq-q">팀원과 작업을 맞출 때는 어떻게 하나?</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-a"><p>RoboRacer를 준비할 때는 검증한 안정본을 기준으로 두고 실험은 별도 파일이나 노드에서만 했다. 잘 달린 설정은 폴백으로 저장해 언제든 되돌릴 수 있게 했다. 예선에서 기동 절차가 문서에 드러나지 않아 문제가 생긴 뒤로는 현장에서 쓴 해결 명령을 RACE_COMMANDS.md에 적어 두었다. Team KORE에서는 부품 검수부터 중간보고 준비까지 7주 제작 일정을 주차별 목표로 나눠 계획했다.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary><span class="faq-num">Q4</span><span class="faq-q">다룰 수 있는 설계·해석 도구는?</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-a"><p>MATLAB/Simulink는 EV9 과제에서 Virtual Vehicle Composer로 1D 종방향 모델을 만들고, Simulink 내부의 모터 토크 맵 데이터를 직접 수정하는 데까지 썼다. CATIA로는 CATIA설계1 수업에서 부품을 설계했고, 경진대회에서도 활용했다. ANSYS 구조 해석과 3D 프린팅은 RISE 산학과제에서, RecurDyn은 서스펜션 해석에서 다뤘다.</p></div>
+          </details>
+
+          <details class="faq-item">
+            <summary><span class="faq-num">Q5</span><span class="faq-q">앞으로 어떤 엔지니어가 되고 싶나?</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-a"><p>기계 설계 엔지니어, 자율주행(드론·모바일 장치·자동차) 관련 설계자, 로봇 엔지니어를 목표로 하고 있다. 한 줄 소개에 적은 것처럼 하드웨어 설계를 넘어 소프트웨어까지 다루는 방향을 이어 가려 한다.</p></div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. 연락처 ===== -->
+    <section id="contact" class="section">
+      <div class="wrap">
+        <div class="section-head"><h2 class="pill">연락처</h2></div>
+        <a class="contact-mail" href="mailto:junehee0207@gnu.ac.kr">junehee0207@gnu.ac.kr</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 자세히 보기 팝업 =====
+       '확인 필요' 표시는 아직 답을 받지 않은 칸이다. 내용을 채우면 <span class="check">확인 필요</span>를 지우면 된다. -->
+
+  <!-- 팝업 1: RoboRacer 2026 -->
+  <dialog class="modal" id="detail-roboracer" aria-labelledby="detail-roboracer-title">
+    <button class="modal-close" type="button" aria-label="닫기"><span aria-hidden="true">×</span></button>
+    <div class="modal-scroll">
+      <div class="modal-head">
+        <span class="pill pill-light">Project. 1</span>
+        <h2 id="detail-roboracer-title">RoboRacer 2026</h2>
+        <p>좁은 트랙에서 추정 위치 없이 장애물 감지하기</p>
+        <!-- 자료 링크: files 폴더의 파일 이름과 대소문자까지 같아야 열린다 -->
+        <div class="modal-links">
+          <a class="file-link" href="files/robotics_poster.pdf" target="_blank" rel="noopener">포스터 PDF <span aria-hidden="true">↗</span></a>
+          <a class="file-link" href="files/robotics_thesis.pdf" target="_blank" rel="noopener">논문 원고 PDF <span aria-hidden="true">↗</span></a>
+          <a class="file-link" href="files/2026_Roboracer_certificate.pdf" target="_blank" rel="noopener">참가 확인서 PDF <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <ol class="detail-list">
+        <li>
+          <h3>배경</h3>
+          <p>RoboRacer(구 F1TENTH)는 1/10 스케일 차량으로 겨루는 자율주행 레이싱 대회다. 2026년 8월 부산 대회 트랙은 통로 폭이 1.1~1.6 m였고, 주행 중에는 사람이 개입할 수 없었으며, 본선은 장애물과 상대 차량이 있는 일대일 경주였다. 8월 3일부터 대회까지 ROS 2와 Jetson 기반 차량을 준비했다.</p>
+        </li>
+        <li>
+          <h3>내 역할</h3>
+          <!-- 질문 1(팀 인원, 직접 만든 부분) 답을 받으면 이 칸을 고친다 -->
+          <p>대회에 참가했고 ROS 2, 2D LiDAR 데이터 처리, rosbag 주행 기록 분석을 다뤘다. 이 과정을 정리한 논문 원고와 포스터의 제1저자를 맡았다. <span class="check">확인 필요</span></p>
+        </li>
+        <li>
+          <h3>과정과 어려움</h3>
+          <p>위치 추정 오차(표준편차 0.3~0.45 m)가 차선 반폭 0.6 m에 가까워, 맵 대조나 경로 튜브처럼 추정 위치를 쓰는 감지는 실제 트랙에서 벽을 장애물로 오인했다. 코너마다 충돌이 났는데, 원인은 조향 계산이 AMCL 갱신에 묶여 최대 2.2초 멈추는 것이었다. 좁은 트랙이라 제동거리가 감지거리보다 길어 장애물을 틀어 피할 수 없었고, 등속 일대일 경주라 추월도 어려웠다.</p>
+        </li>
+        <li>
+          <h3>해결</h3>
+          <p>목표를 더 빠른 차가 아니라 실수하지 않는 차로 잡고, 감지는 마지막 조향 명령으로 예측한 주행 원호를 따라 반폭 0.22 m 회랑 안의 LiDAR 점만 세는 방식으로 추정 위치에서 떼어 냈다. 조향은 TF 기반 25 Hz 고정 주기로 계산해 AMCL 갱신 사이를 오도메트리로 메웠다. 회피는 '틀지 말고 감속, 막히면 정지'로 정해, 감지되면 0.5초 동안 1.2 m/s로 감속하고 감지가 3~5 스캔 이어질 때만 회피 노드로 넘겼다.</p>
+        </li>
+        <li>
+          <h3>결과</h3>
+          <p>연습 트랙 두 곳에서 모은 스캔으로 검증한 결과 주행선 위 벽 오발동은 0건이었다. 8월 25일 대회 트랙 연습 주행에서는 6개 레이싱 랩이 14.7~17.5초, 최고 속도 3.65 m/s, 벽까지 평균 여유 0.74 m였다. 예선에서는 별도 브랜치에 있던 estop 노드가 기본 기동 절차에서 빠져 주행 명령이 모두 막혔고, 현장에서 원인을 찾아 해결했지만 예선 시간을 넘겨 출전하지 못했다.</p>
+        </li>
+        <li>
+          <h3>배운 점</h3>
+          <p>불확실한 추정 위치 위에 판별을 쌓지 않는 것과 조향 명령을 끊기지 않게 유지하는 것을 주행 설계의 원칙으로 정리했다. 예선에서는 차를 굴리는 것과 정해진 시간 안에 확실히 출발시키는 것이 다른 문제라는 것을 확인했다. 그래서 estop 하트비트를 기동 절차에 넣고, 원터치 기동 스크립트와 출발 전 점검 목록을 만드는 것을 다음 과제로 잡았다.</p>
+        </li>
+      </ol>
+    </div>
+  </dialog>
+
+  <!-- 팝업 2: EV9 파워트레인 해석 -->
+  <dialog class="modal" id="detail-ev9" aria-labelledby="detail-ev9-title">
+    <button class="modal-close" type="button" aria-label="닫기"><span aria-hidden="true">×</span></button>
+    <div class="modal-scroll">
+      <div class="modal-head">
+        <span class="pill pill-light">Project. 2</span>
+        <h2 id="detail-ev9-title">EV9 파워트레인 해석</h2>
+        <p>툴 한계를 토크 맵 스케일링으로 풀기</p>
+        <!-- 자료 링크: files 폴더의 파일 이름과 대소문자까지 같아야 열린다 -->
+        <div class="modal-links">
+          <a class="file-link" href="files/Ev9_EMD_report.pdf" target="_blank" rel="noopener">보고서 PDF <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <ol class="detail-list">
+        <li>
+          <h3>배경</h3>
+          <p>미래차요소설계(2026-1) 과제로 전기차 파워트레인의 주행 성능과 전비를 가상 모델로 해석해야 했다. 대상은 공차 중량 2,620 kg, 전면 투영 면적 2.9 m²인 기아 EV9 GT-Line AWD로 정했다. 무거운 질량과 넓은 전면 면적이 주행 저항에 주는 영향을 보기 위해서였다.</p>
+        </li>
+        <li>
+          <h3>내 역할</h3>
+          <p>개인 과제로 모델 구성부터 시뮬레이션, 분석, 보고서 작성까지 맡았다.</p>
+        </li>
+        <li>
+          <h3>과정과 어려움</h3>
+          <p>Virtual Vehicle Composer(VVC)로 파워트레인 뼈대를 만들고 배터리 99.8 kWh(192S×32P), 전·후륜 모터 각 350 Nm 등 EV9 제원을 넣었다. 그런데 VVC 기본 모터 라이브러리가 단일 225 Nm로 제한돼 있어, WLTP 고속 구간에서 요구 가속도를 내지 못하고 시뮬레이션이 강제 종료됐다.</p>
+        </li>
+        <li>
+          <h3>해결</h3>
+          <p>Simulink 내부의 Electric Machine 서브시스템까지 들어가 14×5 토크-속도 맵 배열 구조를 확인했다. 값을 상수로 덮어쓰면 속도별 토크 저하 곡선이 왜곡되므로, 배열 전체에 (350/225) 배율을 곱해 맵 형태를 유지한 채 모터당 350 Nm, 합산 700 Nm로 맞췄다.</p>
+        </li>
+        <li>
+          <h3>결과</h3>
+          <p>WLTP Class 3 한 주기(23.26 km)에서 목표 속도를 추종했고, SOC가 100%에서 96.1%로 내려가 가상 복합 전비 5.98 km/kWh를 얻었다. 공차 중량을 2,400 kg으로 줄이면 가속 구간의 전륜 모터 피크 토크가, 전면 투영 면적을 2.4 m²로 줄이면 고속 항속 구간의 후륜 모터 유지 토크가 줄었다. 1D 종방향 모델이라 코너링 손실과 공조 부하가 빠져 있어, 실제 공인 전비보다 낙관적인 값이라는 한계도 함께 적었다.</p>
+        </li>
+        <li>
+          <h3>배운 점</h3>
+          <p>공차 중량·공력 같은 차량 제원과 모터 맵, 회생제동이 서로 맞물려 전비를 정한다는 것을 모델로 확인했다. 툴 기본값에서 막혔을 때 화면 아래의 모델 데이터를 따라가 원인을 찾는 방법을 익혔다. 1D 모델의 한계를 보고, 횡방향 거동과 제어까지 통합하는 것을 다음 단계로 적었다.</p>
+        </li>
+      </ol>
+    </div>
+  </dialog>
+
+  <!-- 팝업 3: Team KORE -->
+  <dialog class="modal" id="detail-kore" aria-labelledby="detail-kore-title">
+    <button class="modal-close" type="button" aria-label="닫기"><span aria-hidden="true">×</span></button>
+    <div class="modal-scroll">
+      <div class="modal-head">
+        <span class="pill pill-light">Project. 3</span>
+        <h2 id="detail-kore-title">Team KORE</h2>
+        <p>로봇팔 탑재 구조 차량의 전원·제어 배선 설계</p>
+        <!-- 자료 링크: files 폴더의 파일 이름과 대소문자까지 같아야 열린다 -->
+        <div class="modal-links">
+          <a class="file-link" href="files/Team_Kore_report.pdf" target="_blank" rel="noopener">설계 계획서 PDF <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <ol class="detail-list">
+        <li>
+          <h3>배경</h3>
+          <p>2025년 11월 울산 화력발전소 구조물 붕괴 사고를 계기로, 사람이 접근하기 어려운 현장에서 탐색과 물자 전달을 하는 원격 조종 소형 차량을 2026 전국 대학생 자작미래자동차 경진대회 주제로 정했다. 차체는 대회 규격인 550×600×400 mm 미만에 맞춰야 했다.</p>
+        </li>
+        <li>
+          <h3>내 역할</h3>
+          <!-- 질문 3(배선도에서 직접 한 부분) 답을 받으면 이 칸을 고친다 -->
+          <p>4인 팀 Team KORE에서 배선도 구상 및 설계를 맡았다. <span class="check">확인 필요</span></p>
+        </li>
+        <li>
+          <h3>과정과 어려움</h3>
+          <!-- 질문 3(실제로 막혔던 점) 답을 받으면 이 칸을 고친다 -->
+          <p>인휠 모터 2개는 36V, 아두이노·블루투스 모듈·로봇팔 서보 4개는 5V로 동작해서, 전압이 다른 두 계통을 한 배터리 묶음에서 나눠 써야 했다. <span class="check">확인 필요</span></p>
+        </li>
+        <li>
+          <h3>해결</h3>
+          <p>12V 배터리(KB1270) 3개를 직렬로 묶은 36V를 좌우 모터 드라이버(ZS-X11D) 2개에 바로 넣고, 같은 36V를 스텝다운 모듈(XL4015)로 5V까지 낮춰 Arduino Mega 2560, HC-06, MG996 서보 4개에 공급하도록 설계했다. 제어 신호는 스마트폰·태블릿 → 블루투스 → 아두이노 → 모터 드라이버(PWM 속도·방향)와 서보 순서로 이어지게 정리했다.</p>
+        </li>
+        <li>
+          <h3>결과</h3>
+          <!-- 질문 4(실제 제작·대회 결과) 답을 받으면 이 칸을 고친다 -->
+          <p>차체 설계(CATIA), 배선도·전기 흐름도, 주행 시나리오(S코스·교차로·협지·등반·주차와 하차), 7주 제작 일정을 담은 설계 계획서를 팀으로 작성했다. <span class="check">확인 필요</span></p>
+        </li>
+        <li>
+          <h3>배운 점</h3>
+          <!-- 질문 4(배운 점) 답을 받으면 이 칸을 고친다 -->
+          <p>설계 단계에서 제어 흐름을 정리하고 부품 간 호환성과 구현 가능성을 확인했다. <span class="check">확인 필요</span></p>
+        </li>
+      </ol>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <div class="wrap">이준희 | 미래자동차공학과 학업 포트폴리오</div>
+  </footer>
+
+  <script>
+    // 1) 사진이 없으면 회색 상자로 바꾼다 (data-next가 있으면 그 사진을 먼저 시도한다)
+    document.querySelectorAll('img[data-ph]').forEach(function (img) {
+      function onFail() {
+        var next = img.getAttribute('data-next');
+        if (next) {
+          img.removeAttribute('data-next');
+          img.src = next;
+          return;
+        }
+        var box = document.createElement('div');
+        box.className = 'ph';
+        box.textContent = img.getAttribute('data-ph');
+        img.replaceWith(box);
+      }
+      img.addEventListener('error', onFail);
+      if (img.complete && img.naturalWidth === 0) onFail();
+    });
+
+    // 2) 휴대폰 메뉴 열기·닫기
+    var menuBtn = document.querySelector('.menu-btn');
+    var nav = document.getElementById('nav');
+    function setMenu(open) {
+      nav.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    }
+    menuBtn.addEventListener('click', function () {
+      setMenu(!nav.classList.contains('open'));
+    });
+
+    // 3) 메뉴를 누르면 해당 섹션으로 부드럽게 이동
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        history.replaceState(null, '', link.getAttribute('href'));
+        setMenu(false);
+      });
+    });
+
+    // 4) 지금 보고 있는 섹션의 메뉴에 타원 테두리 표시
+    var navLinks = document.querySelectorAll('.nav a');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section').forEach(function (s) { observer.observe(s); });
+
+    // 5) 자세히 보기 팝업 열기·닫기 (닫기 버튼, 바깥 어두운 부분 클릭, Esc 키)
+    var lastOpener = null;
+    document.querySelectorAll('[data-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dlg = document.getElementById(btn.getAttribute('data-open'));
+        if (!dlg) return;
+        lastOpener = btn;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        else dlg.setAttribute('open', '');
+        document.body.classList.add('modal-open');
+        dlg.querySelector('.modal-scroll').scrollTop = 0;
+      });
+    });
+    document.querySelectorAll('.modal').forEach(function (dlg) {
+      function onClosed() {
+        document.body.classList.remove('modal-open');
+        if (lastOpener) lastOpener.focus();
+      }
+      function closeDlg() {
+        if (typeof dlg.close === 'function') dlg.close();
+        else { dlg.removeAttribute('open'); onClosed(); }
+      }
+      dlg.querySelector('.modal-close').addEventListener('click', closeDlg);
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDlg(); });
+      dlg.addEventListener('close', onClosed);
+    });
+
+    // 6) 전공·학업 '더보기' / '접기' (class="more-item" 항목을 펼치고 접는다)
+    document.querySelectorAll('.btn-toggle').forEach(function (btn) {
+      var group = btn.closest('.study-group');
+      var count = group.querySelectorAll('.more-item').length;
+      function setLabel(open) {
+        btn.innerHTML = open ? '접기 <span aria-hidden="true">−</span>' : '더보기 <span>+' + count + '</span>';
+      }
+      setLabel(false);
+      btn.addEventListener('click', function () {
+        var open = !group.classList.contains('is-open');
+        group.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setLabel(open);
+        // 접을 때 묶음 제목이 화면 위로 지나가 있으면 제목 위치로 돌아간다
+        if (!open && group.getBoundingClientRect().top < 0) {
+          group.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
